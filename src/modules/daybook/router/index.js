@@ -5,5 +5,14 @@ export default {
     import(
       /* webpackChunkName: "Daybook Layout" */ "@/modules/daybook/layouts/DaybookLayout.vue"
     ),
-  children: [],
+  children: [
+    {
+      path: "",
+      name: "non-entry",
+      component: () =>
+        import(
+          /* webpackChunkName: "Daybook Non-Entry" */ "@/modules/daybook/views/EntryNonSelected.vue"
+        ),
+    },
+  ],
 };
