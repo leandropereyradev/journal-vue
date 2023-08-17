@@ -1,6 +1,8 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import HomeView from "../views/Home.vue";
 
+import daybookRouter from "../modules/daybook/router";
+
 const routes = [
   {
     path: "/",
@@ -12,6 +14,11 @@ const routes = [
     name: "about",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
+  },
+
+  //Daybook Routes
+  {
+    ...daybookRouter,
   },
 ];
 
