@@ -14,5 +14,13 @@ export default {
           /* webpackChunkName: "Daybook Non-Entry" */ "@/modules/daybook/views/EntryNonSelected.vue"
         ),
     },
+    {
+      path: ":id",
+      name: "entry",
+      component: () =>
+        import(
+          /* webpackChunkName: "Daybook Non-Entry" */ "@/modules/daybook/views/EntryView.vue"
+        ),
+    },
   ],
 };
