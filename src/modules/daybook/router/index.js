@@ -21,6 +21,11 @@ export default {
         import(
           /* webpackChunkName: "Daybook Non-Entry" */ "@/modules/daybook/views/EntryView.vue"
         ),
+      props: (route) => {
+        return {
+          id: route.params.id,
+        };
+      },
     },
   ],
 };
