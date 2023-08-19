@@ -8,7 +8,7 @@
       </div>
 
       <div>
-        <button class="btn btn-danger mx-2">
+        <button class="btn btn-danger mx-2" v-if="entry.id" @click="onDeleteEntry">
           Borrar
           <i class="fa fa-trash-alt"></i>
         </button>
@@ -55,18 +55,40 @@ export default {
     Fab: defineAsyncComponent(() => import('../components/Fab.vue'))
   },
   methods: {
-    ...mapActions('journal', ['updateEntry']),
+    ...mapActions('journal', ['updateEntry', 'createEntry', 'deleteEntry']),
 
     loadEntry() {
-      const entry = this.getEntryById(this.id)
+      let entry;
 
-      if (!entry) return this.$router.push({ name: 'non-entry' })
+      if (this.id === 'new') {
+        entry = {
+          text: '',
+          date: new Date().getTime()
+        }
+      } else {
+
+        entry = this.getEntryById(this.id)
+
+        if (!entry) return this.$router.push({ name: 'non-entry' })
+      }
 
       this.entry = entry
     },
 
     async saveEntry() {
-      this.updateEntry(this.entry)
+      if (this.entry.id) {
+
+        await this.updateEntry(this.entry)
+      } else {
+        const id = await this.createEntry(this.entry)
+
+        this.$router.push({ name: 'entry', params: { id } })
+      }
+    },
+    async onDeleteEntry() {
+      await this.deleteEntry(this.entry.id)
+
+      this.$router.push({ name: 'non-entry' })
     }
   },
   computed: {

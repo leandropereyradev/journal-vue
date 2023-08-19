@@ -12,4 +12,12 @@ export const updateEntry = (state, entry) => {
   state.entries[index] = entry;
 };
 
-export const addEntry = (/*state */) => {};
+export const addEntry = (state, entry) => {
+  state.entries = [entry, ...state.entries];
+};
+
+export const deleteEntry = (state, id) => {
+  const filter = state.entries.filter((entry) => entry.id !== id);
+
+  state.entries = filter;
+};
