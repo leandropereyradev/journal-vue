@@ -8,6 +8,8 @@
       </div>
 
       <div>
+        <input type="file" @change="onSelectedImage($event)">
+
         <button class="btn btn-danger mx-2" v-if="entry.id" @click="onDeleteEntry">
           Borrar
           <i class="fa fa-trash-alt"></i>
@@ -28,8 +30,11 @@
     </textarea>
     </div>
 
-    <img src="https://img.freepik.com/foto-gratis/colorida-cascada-majestuosa-bosque-parque-nacional-otono_554837-661.jpg"
-      alt="cascada" class="img-thumbnail">
+    <!-- <img src="https://img.freepik.com/foto-gratis/colorida-cascada-majestuosa-bosque-parque-nacional-otono_554837-661.jpg"
+      alt="cascada" class="img-thumbnail"> -->
+
+    <img :src="localImage" v-if="localImage" alt="cascada" class="img-thumbnail">
+
   </template>
   <Fab icon="fa-save" @on:click="saveEntry" />
 </template>
@@ -51,6 +56,8 @@ export default {
   data() {
     return {
       entry: null,
+      localImage: null,
+      file: null
     }
   },
   components: {
@@ -119,7 +126,23 @@ export default {
       }
 
 
-    }
+    },
+    onSelectedImage(event) {
+      const file = event.target.files[0]
+      if (!file) {
+        this.localImage = null
+        this.file = null
+
+        return
+      }
+
+      this.file = file
+
+      const fileReader = new FileReader()
+      fileReader.onload = () => this.localImage = fileReader.result
+      fileReader.readAsDataURL(file)
+    },
+
   },
   computed: {
     ...mapGetters('journal', ['getEntryById']),
