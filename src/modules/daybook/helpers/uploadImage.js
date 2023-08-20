@@ -1,5 +1,4 @@
 import cloudinary from "@/assets/api/cloudinary";
-import axios from "axios";
 
 const uploadImage = async (file) => {
   if (!file) return;
@@ -9,8 +8,6 @@ const uploadImage = async (file) => {
     formData.append("file", file);
 
     const { data } = await cloudinary.post("/upload", formData);
-
-    console.log(data);
 
     return data.secure_url;
   } catch (error) {
