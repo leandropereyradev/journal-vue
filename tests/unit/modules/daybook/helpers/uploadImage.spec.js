@@ -39,10 +39,10 @@ describe("uploadImage Cloudinary ", () => {
 
   test("The image should not exist", async () => {
     //Para probar que la prueba falle, reasignamos la variable createdImageByUploadImage con una imagen existente. Para que pase, comentamos esta variable así no la tiene en cuenta
-    createdImageByUploadImage = testedImage;
+    // createdImageByUploadImage = testedImage;
 
     try {
-      await axios.get(createdImageByUploadImage, {
+      const { status } = await axios.get(createdImageByUploadImage, {
         responseType: "arraybuffer",
       });
 
