@@ -101,8 +101,10 @@ export default {
 
       Swal.showLoading()
 
-      const picture = await uploadImage(this.file)
-      this.entry.picture = picture
+      if (this.file) {
+        const picture = await uploadImage(this.file);
+        this.entry.picture = picture;
+      }
 
       if (this.entry.id) {
 
@@ -145,12 +147,7 @@ export default {
 
     onSelectedImage(event) {
       const file = event.target.files[0]
-      if (!file) {
-        this.localImage = null
-        this.file = null
-
-        return
-      }
+      if (!file) return
 
       this.file = file
 

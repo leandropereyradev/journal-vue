@@ -1,6 +1,6 @@
 // export const myAction = async ({commit}) => {}
 
-import journalAPI from "@/assets/api/journalAPI";
+import journalAPI from "@/api/journalAPI";
 
 export const loadEntries = async ({ commit }) => {
   const { data } = await journalAPI.get("/entries.json");
