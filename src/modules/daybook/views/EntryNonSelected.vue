@@ -10,6 +10,7 @@
 import { defineAsyncComponent } from 'vue'
 
 export default {
+  name: 'NonEntrySelected',
   methods: {
     createNewEntry() {
       this.$router.push({
