@@ -31,8 +31,7 @@
     </textarea>
     </div>
 
-    <!-- <img src="https://img.freepik.com/foto-gratis/colorida-cascada-majestuosa-bosque-parque-nacional-otono_554837-661.jpg"
-      alt="cascada" class="img-thumbnail"> -->
+    <img v-if="entry.picture && !localImage" :src="entry.picture" alt="cascada" class="img-thumbnail">
 
     <img :src="localImage" v-if="localImage" alt="cascada" class="img-thumbnail">
 
@@ -46,6 +45,9 @@ import { mapGetters, mapActions } from 'vuex'
 import Swal from 'sweetalert2'
 
 import getDayMonthYear from '../helpers/getDayMonthYear'
+import uploadImage from '../helpers/uploadImage'
+
+
 
 export default {
   props: {
@@ -71,6 +73,9 @@ export default {
     ...mapActions('journal', ['updateEntry', 'createEntry', 'deleteEntry']),
 
     loadEntry() {
+      this.localImage = null
+      this.file = null
+
       let entry;
 
       if (this.id === 'new') {
@@ -96,6 +101,9 @@ export default {
 
       Swal.showLoading()
 
+      const picture = await uploadImage(this.file)
+      this.entry.picture = picture
+
       if (this.entry.id) {
 
         await this.updateEntry(this.entry)
@@ -104,6 +112,8 @@ export default {
 
         this.$router.push({ name: 'entry', params: { id } })
       }
+
+      this.file = null
 
       Swal.fire('Guardado!', 'Entrada registrada con éxito', 'success')
     },
@@ -151,6 +161,7 @@ export default {
 
     onSelectImage() {
       this.$refs.imageSelector.click()
+
     }
   },
 
