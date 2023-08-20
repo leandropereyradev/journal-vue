@@ -8,13 +8,14 @@
       </div>
 
       <div>
-        <input type="file" @change="onSelectedImage($event)">
+        <input type="file" @change="onSelectedImage($event)" ref="imageSelector" v-show="false"
+          accept="image/png, image/jpeg">
 
         <button class="btn btn-danger mx-2" v-if="entry.id" @click="onDeleteEntry">
           Borrar
           <i class="fa fa-trash-alt"></i>
         </button>
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" @click="onSelectImage">
           Subir foto
           <i class="fa fa-upload"></i>
         </button>
@@ -53,6 +54,7 @@ export default {
       required: true
     }
   },
+
   data() {
     return {
       entry: null,
@@ -60,9 +62,11 @@ export default {
       file: null
     }
   },
+
   components: {
     Fab: defineAsyncComponent(() => import('../components/Fab.vue'))
   },
+
   methods: {
     ...mapActions('journal', ['updateEntry', 'createEntry', 'deleteEntry']),
 
@@ -103,6 +107,7 @@ export default {
 
       Swal.fire('Guardado!', 'Entrada registrada con éxito', 'success')
     },
+
     async onDeleteEntry() {
       const result = await Swal.fire({
         title: 'Está seguro?',
@@ -127,6 +132,7 @@ export default {
 
 
     },
+
     onSelectedImage(event) {
       const file = event.target.files[0]
       if (!file) {
@@ -143,30 +149,39 @@ export default {
       fileReader.readAsDataURL(file)
     },
 
+    onSelectImage() {
+      this.$refs.imageSelector.click()
+    }
   },
+
   computed: {
     ...mapGetters('journal', ['getEntryById']),
+
     day() {
       const { day } = getDayMonthYear(this.entry.date)
 
       return day
     },
+
     month() {
       const { month } = getDayMonthYear(this.entry.date)
 
       return month
     },
+
     yearDay() {
       const { yearDay } = getDayMonthYear(this.entry.date)
 
       return yearDay
     },
   },
+
   watch: {
     id() {
       this.loadEntry()
     }
   },
+
   created() {
     this.loadEntry()
   }
