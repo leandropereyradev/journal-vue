@@ -1,5 +1,6 @@
 import { shallowMount } from "@vue/test-utils";
 import Home from "@/views/Home";
+import mockRouter from "../mocks/mockRouter";
 
 describe("Home View", () => {
   test("Should render the component correctly", () => {
@@ -9,10 +10,6 @@ describe("Home View", () => {
   });
 
   test("Should redirect to no-entry on button click", () => {
-    const mockRouter = {
-      push: jest.fn(),
-    };
-
     const wrapper = shallowMount(Home, {
       // global: opciones globales del componente
       global: {

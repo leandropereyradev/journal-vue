@@ -2,12 +2,9 @@ import { shallowMount } from "@vue/test-utils";
 import Entry from "@/modules/daybook/components/Entry.vue";
 import { journalState } from "../../../mocks/test-journal-state";
 import { dateMock } from "../../../mocks/test-date";
+import mockRouter from "../../..//mocks/mockRouter";
 
 describe("Entry Component", () => {
-  const mockRouter = {
-    push: jest.fn(),
-  };
-
   const testedEntry = journalState.entries[0];
 
   const wrapper = shallowMount(Entry, {

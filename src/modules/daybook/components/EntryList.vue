@@ -22,20 +22,23 @@ import { defineAsyncComponent } from 'vue'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: {
-    Entry: defineAsyncComponent(() => import('./Entry.vue')),
-  },
-  computed: {
-    ...mapGetters('journal', ['getEntriesByTerm']),
-    entriesByTerm() {
-      return this.getEntriesByTerm(this.term)
-    }
-  },
   data() {
     return {
       term: ''
     }
-  }
+  },
+
+  computed: {
+    ...mapGetters('journal', ['getEntriesByTerm']),
+
+    entriesByTerm() {
+      return this.getEntriesByTerm(this.term)
+    }
+  },
+
+  components: {
+    Entry: defineAsyncComponent(() => import('./Entry.vue')),
+  },
 }
 </script>
 

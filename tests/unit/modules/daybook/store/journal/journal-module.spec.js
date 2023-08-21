@@ -1,16 +1,5 @@
-import { createStore } from "vuex";
-import journal from "@/modules/daybook/store/journal";
 import { journalState } from "../../../../mocks/test-journal-state";
-
-const createVuexStore = (initialState) =>
-  createStore({
-    modules: {
-      journal: {
-        ...journal,
-        state: { ...initialState },
-      },
-    },
-  });
+import createVuexStore from "../../../../mocks/createVuexStore";
 
 describe("Vuex - Journal Module testing", () => {
   // State
